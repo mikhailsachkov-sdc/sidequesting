@@ -1,0 +1,39 @@
+telegram:
+  token: ${TELEGRAM_BOT_TOKEN}   # set via env var or override below for local dev
+  # token: "123456:ABC-YOUR-TOKEN-HERE"
+
+  # ── Mode ────────────────────────────────────────────────────────────────────
+  # "polling"  → long-poll loop, no public URL needed (great for local dev)
+  # "webhook"  → Telegram POSTs updates to your server (required for production
+  #              behind a load balancer / serverless, must be HTTPS)
+  mode: polling
+
+  # ── Webhook-only settings (ignored when mode=polling) ───────────────────────
+  webhook:
+    url: ${TELEGRAM_WEBHOOK_URL:https://yourdomain.com}
+    path: /webhook/${TELEGRAM_WEBHOOK_SECRET:changeme}
+
+spring:
+  application:
+    name: telegram-bot
+
+  # Jackson – write snake_case, skip nulls globally
+  jackson:
+    default-property-inclusion: non_null
+    property-naming-strategy: SNAKE_CASE
+
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          model: claude-haiku-4-5
+          max-tokens: 900
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.telegrambot: DEBUG
+    org.springframework.web.reactive: INFO

@@ -1,0 +1,29 @@
+telegram:
+  token: ${TELEGRAM_BOT_TOKEN}   # set via env var or override below for local dev
+  mode: polling
+
+
+spring:
+  application:
+    name: sidequest
+
+  # Jackson – write snake_case, skip nulls globally
+  jackson:
+    default-property-inclusion: non_null
+    property-naming-strategy: SNAKE_CASE
+
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          model: claude-haiku-4-5
+          max-tokens: 900
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.telegrambot: DEBUG
+    org.springframework.web.reactive: INFO
